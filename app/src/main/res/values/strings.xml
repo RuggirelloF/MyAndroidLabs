@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">Fabrizio\'s Android Labs</string>
-    <string name="hello_message">Hello World!</string>
-    <string name="button_message">I\'m a Button</string>
-    <string name="edit_message">I\'m an EditText</string>
-    <string name="hint_text">Write something here</string>
-    <string name="compound_message">Do you like coffee?</string>
+    <string name="app_name">Flag spinner</string>
+    <string name="spin_message">Spin the flag</string>
+    <string name="button1">button 1</string>
+    <string name="button2">button 2</string>
+    <string name="button3">button 3</string>"
 </resources>

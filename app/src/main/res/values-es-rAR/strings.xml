@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Fabrizio\'s Android Labs</string>
-    <string name="hello_message">¡Hola Mundo!</string>
-    <string name="button_message">Soy un botón</string>
+    <string name="app_name">Girador de bandera</string>
+    <string name="spin_message">Gira la bandera</string>
+    <string name="button1">botón 1</string>
+    <string name="button2">botón 2</string>
+    <string name="button3">botón 3</string>
 </resources>
