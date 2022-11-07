@@ -18,6 +18,7 @@ public class ChatRoom extends AppCompatActivity {
 
     ActivityChatRoomBinding binding;
     ArrayList<String> messages = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +26,7 @@ public class ChatRoom extends AppCompatActivity {
         binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
         setContentView((binding.getRoot()));
 
-        binding.recycleView.setAdapter(new RecyclerView.Adapter<MyRowHolder>() {
+        binding.recycleView.setAdapter(myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
             @NonNull
             @Override
             public MyRowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -54,10 +55,13 @@ public class ChatRoom extends AppCompatActivity {
 
         binding.sendButton.setOnClickListener(click ->{
             messages.add(binding.textInput.getText().toString());
+            myAdapter.notifyItemInserted(messages.size() - 1);
 
             binding.textInput.setText("");
         });
     }
+
+    RecyclerView.Adapter myAdapter;
 
     class MyRowHolder extends RecyclerView.ViewHolder{
         TextView messageText;
