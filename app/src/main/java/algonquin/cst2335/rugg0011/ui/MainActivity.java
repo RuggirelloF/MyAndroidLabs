@@ -1,8 +1,10 @@
-package algonquin.cst2335.rugg0011;
+package algonquin.cst2335.rugg0011.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import algonquin.cst2335.rugg0011.R;
 
 public class MainActivity extends AppCompatActivity {
 
