@@ -44,8 +44,9 @@ public class ChatRoom extends AppCompatActivity {
             public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
                 holder.messageText.setText("");
                 holder.timeText.setText("");
-                ChatMessage obj = messages.get(position);
-                holder.messageText.setText(obj);
+
+                ChatMessage obj = new ChatMessage();
+                holder.messageText.setText(obj.getMessage());
             }
 
             @Override
@@ -61,13 +62,27 @@ public class ChatRoom extends AppCompatActivity {
 
         binding.sendButton.setOnClickListener(click ->{
 
-            SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
-            String currentDateandTime = sdf.format(new Date());
+            SimpleDateFormat sdf = new SimpleDateFormat("EE, dd-MMM-yyyy hh-mm-ss a");
+            String currentDateAndTime = sdf.format(new Date());
 
             ChatMessage cm = new ChatMessage();
-            cm.ChatRoom(binding.textInput.getText().toString(), currentDateandTime, true);
+            cm.ChatRoom(binding.textInput.getText().toString(), currentDateAndTime, true);
 
-            messages.add(binding.textInput.getText().toString());
+            messages.add(cm);
+            myAdapter.notifyItemInserted(messages.size() - 1);
+
+            binding.textInput.setText("");
+        });
+
+        binding.receiveButton.setOnClickListener(click ->{
+
+            SimpleDateFormat sdf = new SimpleDateFormat("EE, dd-MMM-yyyy hh-mm-ss a");
+            String currentDateAndTime = sdf.format(new Date());
+
+            ChatMessage cm = new ChatMessage();
+            cm.ChatRoom(binding.textInput.getText().toString(), currentDateAndTime, false);
+
+            messages.add(cm);
             myAdapter.notifyItemInserted(messages.size() - 1);
 
             binding.textInput.setText("");
@@ -77,7 +92,7 @@ public class ChatRoom extends AppCompatActivity {
         messages = chatModel.messages.getValue();
 
         if(messages == null){
-            chatModel.messages.postValue( messages = new ArrayList<String>());
+            chatModel.messages.postValue( messages = new ArrayList<ChatMessage>());
         }
     }
 
