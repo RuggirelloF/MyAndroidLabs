@@ -102,7 +102,12 @@ public class ChatRoom extends AppCompatActivity {
 
             @Override
             public int getItemViewType(int position) {
-                return position % 2 * 2;
+                if(messages.get(position).getIsSentButton()){
+                    return 0;
+                }
+                else{
+                    return 1;
+                }
             }
 
             @NonNull
@@ -110,10 +115,10 @@ public class ChatRoom extends AppCompatActivity {
             public MyRowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 SentMessageBinding sentBinding = SentMessageBinding.inflate(getLayoutInflater());
                 ReceivedMessageBinding receivedBinding = ReceivedMessageBinding.inflate(getLayoutInflater());
-                if(viewType == 2){
+                if(viewType == 0){
                     return new MyRowHolder(sentBinding.getRoot());
                 }
-                else if(viewType == 0){
+                else if(viewType == 1){
                     return new MyRowHolder(receivedBinding.getRoot());
                 }
                 return null;
@@ -122,11 +127,11 @@ public class ChatRoom extends AppCompatActivity {
             @Override
             public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
                 ChatMessage obj = messages.get(position);
-                if(holder.getItemViewType() == 2) {
+                if(holder.getItemViewType() == 0) {
                     holder.sentMessageText.setText(obj.getMessage());
                     holder.sentTimeText.setText(obj.getTimeSent());
                 }
-                else if(holder.getItemViewType() == 0) {
+                else if(holder.getItemViewType() == 1){
                     holder.receivedMessageText.setText(obj.getMessage());
                     holder.receivedTimeText.setText(obj.getTimeSent());
                 }
