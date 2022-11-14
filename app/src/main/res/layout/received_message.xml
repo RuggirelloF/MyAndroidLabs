@@ -5,44 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/receivedImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/received_image" />
+
     <TextView
-        android:id="@+id/sentMessage"
+        android:id="@+id/receivedMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Message goes here"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/sentImage"
-        app:layout_constraintTop_toBottomOf="@+id/sentUser" />
+        app:layout_constraintStart_toEndOf="@+id/receivedImage"
+        app:layout_constraintTop_toBottomOf="@+id/receivedUser" />
 
     <TextView
-        android:id="@+id/sentTime"
+        android:id="@+id/receivedTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Time goes here"
         android:textSize="12sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="@+id/sentUser"
-        app:layout_constraintStart_toEndOf="@+id/sentUser" />
-
-    <ImageView
-        android:id="@+id/sentImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/sent_image" />
+        app:layout_constraintBottom_toBottomOf="@+id/receivedUser"
+        app:layout_constraintStart_toEndOf="@+id/receivedUser" />
 
     <TextView
-        android:id="@+id/sentUser"
+        android:id="@+id/receivedUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="You"
+        android:text="Other"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/sentImage"
-        app:layout_constraintTop_toTopOf="@+id/sentImage" />
-
+        app:layout_constraintStart_toEndOf="@+id/receivedImage"
+        app:layout_constraintTop_toTopOf="@+id/receivedImage" />
 </androidx.constraintlayout.widget.ConstraintLayout>
