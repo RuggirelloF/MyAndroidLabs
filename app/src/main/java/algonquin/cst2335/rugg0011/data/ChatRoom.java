@@ -1,4 +1,4 @@
-package algonquin.cst2335.rugg0011.ui;
+package algonquin.cst2335.rugg0011.data;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,14 +6,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,10 +19,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import algonquin.cst2335.rugg0011.R;
-import algonquin.cst2335.rugg0011.data.ChatMessage;
-import algonquin.cst2335.rugg0011.data.ChatMessageDAO;
-import algonquin.cst2335.rugg0011.data.ChatRoomViewModel;
-import algonquin.cst2335.rugg0011.data.MessageDatabase;
 import algonquin.cst2335.rugg0011.databinding.ActivityChatRoomBinding;
 import algonquin.cst2335.rugg0011.databinding.ReceivedMessageBinding;
 import algonquin.cst2335.rugg0011.databinding.SentMessageBinding;
@@ -101,6 +94,14 @@ public class ChatRoom extends AppCompatActivity {
             });
         });
 
+        chatModel.selectedMessage.observe(this, (newValue) -> {
+            MessageDetailsFragment chatFragment = new MessageDetailsFragment(newValue);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentLocation, chatFragment)
+                    .commit();
+        });
+
         binding.recycleView.setAdapter(myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
 
             @Override
@@ -160,41 +161,12 @@ public class ChatRoom extends AppCompatActivity {
             super(itemView);
 
             itemView.setOnClickListener(click -> {
+
                 int position = getAbsoluteAdapterPosition();
-                AlertDialog.Builder builder = new AlertDialog.Builder(ChatRoom.this);
+                ChatMessage selected = messages.get(position);
 
-                if(getItemViewType() == 0){
-                    builder.setMessage("Do you want to delete this message: " + sentMessageText.getText().toString())
-                            .setTitle("Question:")
-                            .setNegativeButton("No", (dialog, cl) -> {})
-                            .setPositiveButton("Yes", (dialog, cl) -> {
-                                ChatMessage removedMessage = messages.get(position);
-                                messages.remove(position);
-                                myAdapter.notifyItemRemoved(position);
+                chatModel.selectedMessage.postValue(selected);
 
-                                Snackbar.make(sentMessageText, "You deleted message #" + position, Snackbar.LENGTH_LONG)
-                                        .setAction("Undo", clk -> {
-                                            messages.add(position, removedMessage);
-                                            myAdapter.notifyItemInserted(position);
-                                }).show();
-                    }).create().show();
-                }
-                else if(getItemViewType() == 1){
-                    builder.setMessage("Do you want to delete this message: " + receivedMessageText.getText().toString())
-                            .setTitle("Question:")
-                            .setNegativeButton("No", (dialog, cl) -> {})
-                            .setPositiveButton("Yes", (dialog, cl) -> {
-                                ChatMessage removedMessage = messages.get(position);
-                                messages.remove(position);
-                                myAdapter.notifyItemRemoved(position);
-
-                                Snackbar.make(receivedMessageText, "You deleted message #" + position, Snackbar.LENGTH_LONG)
-                                        .setAction("Undo", clk -> {
-                                            messages.add(position, removedMessage);
-                                            myAdapter.notifyItemInserted(position);
-                                }).show();
-                    }).create().show();
-                }
             });
 
             sentMessageText = itemView.findViewById(R.id.sentMessage);
